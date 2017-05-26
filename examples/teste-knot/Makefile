@@ -11,7 +11,6 @@ CFLAGS := -O2 -Wall -Wextra -std=c99 -lrt -Iinc -I.
 
 OBJDIR = obj
 INCLUDES = $(wildcard inc/*.h)
-OBJ = $(wildcard obj/*.o)
 
 ### General build targets
 
@@ -33,6 +32,6 @@ $(OBJDIR)/%.o: src/%.c $(INCLUDES) | $(OBJDIR)
 ### Main program assembly
 
 $(APP_NAME): $(OBJDIR)/$(APP_NAME).o  $(OBJDIR)/aes.o $(OBJDIR)/hal.o $(OBJDIR)/lmic.o $(OBJDIR)/oslmic.o $(OBJDIR)/radio.o
-	$(CC) $< $(OBJDIR)/aes.o $(OBJDIR)/hal.o $(OBJDIR)/lmic.o $(OBJDIR)/oslmic.o $(OBJDIR)/radio.o -lwiringPi -o $@
+	$(CC) $< $(OBJDIR)/aes.o $(OBJDIR)/hal.o $(OBJDIR)/lmic.o $(OBJDIR)/oslmic.o $(OBJDIR)/radio.o -o $@
 
 ### EOF
