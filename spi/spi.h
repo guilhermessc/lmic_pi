@@ -11,6 +11,8 @@
 extern "C"{
 #endif
 
+#include <stdint.h>
+
 int8_t spi_init(const char *dev);
 int spi_transfer(int8_t spi_fd, const uint8_t *tx, int ltx, uint8_t *rx,
 			int lrx);

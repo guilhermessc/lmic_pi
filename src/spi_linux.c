@@ -113,5 +113,6 @@ int spi_transfer(int8_t spi_fd, const uint8_t *tx, int ltx, uint8_t *rx,
 	if (tx != NULL)
 		free(pdummy);
 
-	return ret ? -errno : 0;
+	// return ret ? -errno : 0;
+	return ret;
 }

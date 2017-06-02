@@ -41,6 +41,7 @@ void hal_pin_rst (u1_t val) {
     }
 }
 
+// #define NUM_DIO 3
 static bool dio_states[NUM_DIO] = {0};
 
 static void hal_io_check() {
@@ -73,7 +74,7 @@ void hal_pin_nss (u1_t val) {
 // perform SPI transaction with radio
 u1_t hal_spi (u1_t out) {
     // u1_t res = wiringPiSPIDataRW(0, &out, 1);
-    u1_t res = spi_transfer("/dev/spidev0.0", NULL, 0, &out, 1);
+    u1_t res = spi_transfer(spifd, NULL, 0, &out, 1);
     return out;
 }
 
