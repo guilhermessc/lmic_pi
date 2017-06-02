@@ -10,19 +10,21 @@
 #ifndef _localhal_hal_h_
 #define _localhal_hal_h_
 
-static const int NUM_DIO = 3;
-
-#define UNUSED_PIN 255
+//static const int NUM_DIO = 3;
 
 struct lmic_pinmap {
     u1_t nss;
     u1_t rxtx;
     u1_t rst;
-    u1_t dio[NUM_DIO];
+    u1_t dio[3];
 };
 
+const u1_t LMIC_UNUSED_PIN = 0xff;
+
+
 // Declared here, to be defined an initialized by the application
-extern lmic_pinmap pins;
+extern const lmic_pinmap pins;
+
 
 #endif // _localhal_hal_h_
 
