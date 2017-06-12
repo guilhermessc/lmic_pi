@@ -3,7 +3,7 @@
 #include "hal.h"
 #include "local_hal.h"
 #include <wiringPi.h>
-// #include <wiringPiSPI.h>
+#include <wiringPiSPI.h>
 #include <stdio.h>
 #include <time.h>
 #include <errno.h>
@@ -62,9 +62,9 @@ static void hal_io_check() {
 static int spifd;
 
 static void hal_spi_init () {
-    // spifd = wiringPiSPISetup(0, 10000000);
+    spifd = wiringPiSPISetup(0, 10000000);
     /* TODO: Create a macro for the pathname */
-    spifd = spi_init("/dev/spidev0.0");
+    // spifd = spi_init("/dev/spidev0.0");
 }
 
 void hal_pin_nss (u1_t val) {
@@ -73,8 +73,8 @@ void hal_pin_nss (u1_t val) {
 
 // perform SPI transaction with radio
 u1_t hal_spi (u1_t out) {
-    // u1_t res = wiringPiSPIDataRW(0, &out, 1);
-    u1_t res = spi_transfer(spifd, NULL, 0, &out, 1);
+    u1_t res = wiringPiSPIDataRW(0, &out, 1);
+    // u1_t res = spi_transfer(spifd, NULL, 0, &out, 1);
     return out;
 }
 
