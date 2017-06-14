@@ -123,19 +123,19 @@ static int GPIOWrite(int pin, int value)
 	return 0;
 }
 
-int hal_gpio_setup(void)
+int knot_hal_gpio_setup(void)
 {
 	ngpio = 0;
 	return 0;
 }
 
-void hal_gpio_unmap(void)
+void knot_hal_gpio_unmap(void)
 {
 	while (ngpio)
 		GPIOUnexport((int) initialized_gpio[--ngpio]);
 }
 
-void hal_gpio_pin_mode(uint8_t gpio, uint8_t mode)
+void knot_hal_gpio_pin_mode(uint8_t gpio, uint8_t mode)
 {
 	if (ngpio > HIGHEST_GPIO) {
 		fprintf(stderr, "Cannot initialize gpio: maximum number exceeded\n");
@@ -148,27 +148,27 @@ void hal_gpio_pin_mode(uint8_t gpio, uint8_t mode)
 	GPIODirection((int) gpio, (int) mode);
 }
 
-void hal_gpio_digital_write(uint8_t gpio, uint8_t value)
+void knot_hal_gpio_digital_write(uint8_t gpio, uint8_t value)
 {
 	GPIOWrite(gpio, value);
 }
 
-int hal_gpio_digital_read(uint8_t gpio)
+int knot_hal_gpio_digital_read(uint8_t gpio)
 {
 	return (GPIORead((int) gpio) == LOW ? LOW : HIGH);
 }
 
-int hal_gpio_analog_read(uint8_t)
+int knot_hal_gpio_analog_read(uint8_t)
 {
 	return 0;
 }
 
-void hal_gpio_analog_reference(uint8_t mode)
+void knot_hal_gpio_analog_reference(uint8_t mode)
 {
 
 }
 
-void hal_gpio_analog_write(uint8_t, int)
+void knot_hal_gpio_analog_write(uint8_t, int)
 {
 
 }
