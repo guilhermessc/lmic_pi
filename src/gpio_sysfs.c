@@ -12,7 +12,7 @@
 #define BUFFER_MAX 3
 #define DIRECTION_MAX 35
 #define VALUE_MAX 30
-#define HIGHEST_GPIO 26;
+#define HIGHEST_GPIO 26
 
 static uint8_t initialized_gpio[HIGHEST_GPIO];
 static int ngpio = 0;
