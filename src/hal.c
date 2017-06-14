@@ -9,6 +9,7 @@
 #include <errno.h>
 
 #include "../spi/spi.h"
+#include "../inc/gpio_sysfs.h"
 
 int fd;
 
@@ -17,9 +18,14 @@ int fd;
 
 static void hal_io_init () {
     wiringPiSetup();
-    pinMode(pins.nss, OUTPUT);
-    pinMode(pins.rxtx, OUTPUT);
-    pinMode(pins.rst, OUTPUT);
+    // pinMode(pins.nss, OUTPUT);
+    // pinMode(pins.rxtx, OUTPUT);
+    // pinMode(pins.rst, OUTPUT);
+    hal_gpio_setup();
+    hal_gpio_pin_mode(pins.nss, OUTPUT);
+    hal_gpio_pin_mode(pins.rxtx, OUTPUT);
+    hal_gpio_pin_mode(pins.rst, OUTPUT);
+
     pinMode(pins.dio[0], INPUT);
     pinMode(pins.dio[1], INPUT);
     pinMode(pins.dio[2], INPUT);
@@ -27,17 +33,17 @@ static void hal_io_init () {
 
 // val == 1  => tx 1
 void hal_pin_rxtx (u1_t val) {
-    digitalWrite(pins.rxtx, val);
+    hal_gpio_digital_write(pins.rxtx, val);
 }
 
 // set radio RST pin to given value (or keep floating!)
 void hal_pin_rst (u1_t val) {
     if(val == 0 || val == 1) { // drive pin
-        pinMode(pins.rst, OUTPUT);
-        digitalWrite(pins.rst, val);
+        hal_gpio_pin_mode(pins.rst, OUTPUT);
+        hal_gpio_digital_write(pins.rst, val);
 //        digitalWrite(0, val==0?LOW:HIGH);
     } else { // keep pin floating
-        pinMode(pins.rst, INPUT);
+        hal_gpio_pin_mode(pins.rst, INPUT);
     }
 }
 
@@ -68,7 +74,7 @@ static void hal_spi_init () {
 }
 
 void hal_pin_nss (u1_t val) {
-    digitalWrite(pins.nss, val);
+    hal_gpio_digital_write(pins.nss, val);
 }
 
 // perform SPI transaction with radio
