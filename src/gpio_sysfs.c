@@ -7,7 +7,7 @@
  *
  */
 
-#include "hal/gpio_sysfs.h"
+#include "../inc/gpio_sysfs.h"
 
 #define BUFFER_MAX 3
 #define DIRECTION_MAX 35
