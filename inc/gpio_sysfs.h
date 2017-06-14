@@ -21,6 +21,7 @@ extern "C" {
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
+#include <stdint.h>
 
 #define INPUT 0
 #define OUTPUT 1
