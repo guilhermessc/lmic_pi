@@ -10,11 +10,11 @@
 
 #ifndef __HAL_GPIO_H__
 #define __HAL_GPIO_H__
-
+/*
 #ifdef __cplusplus
 extern "C" {
 #endif
-
+*/
 #include <sys/stat.h>
 #include <sys/types.h>
 #include <fcntl.h>
@@ -37,9 +37,9 @@ int knot_hal_gpio_digital_read(uint8_t);
 int knot_hal_gpio_analog_read(uint8_t);
 void knot_hal_gpio_analog_reference(uint8_t mode);
 void knot_hal_gpio_analog_write(uint8_t, int);
-
+/*
 #ifdef __cplusplus
 }
 #endif
-
+*/
 #endif

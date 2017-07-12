@@ -2,15 +2,15 @@
 #include "oslmic.h"
 #include "hal.h"
 #include "local_hal.h"
-#include "gpio_sysfs.h"
-#include "spi.h"
 #include <wiringPi.h>
 #include <wiringPiSPI.h>
 #include <stdio.h>
 #include <time.h>
 #include <errno.h>
 
-int fd;
+#include "spi.h"
+#include "gpio_sysfs.h"
+
 
 // -----------------------------------------------------------------------------
 // I/O

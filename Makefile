@@ -7,7 +7,7 @@ APP_NAME := teste
 CC := $(CROSS_COMPILE)g++
 AR := $(CROSS_COMPILE)ar
 
-CFLAGS := -O2 -Wall -Wextra -std=c99 -lrt -Iinc -I.
+CFLAGS := -O2 -Wall -Wextra -lrt -Iinc -I.
 
 OBJDIR = obj
 INCLUDES = $(wildcard inc/*.h)
@@ -32,7 +32,7 @@ $(OBJDIR)/%.o: src/%.c $(INCLUDES) | $(OBJDIR)
 
 ### Main program assembly
 
-$(APP_NAME): $(OBJDIR)/gpio_sysfs.o $(OBJDIR)/$(APP_NAME).o $(OBJDIR)/spi_linux.o $(OBJDIR)/aes.o $(OBJDIR)/hal.o $(OBJDIR)/lmic.o $(OBJDIR)/oslmic.o $(OBJDIR)/radio.o
+$(APP_NAME): $(OBJDIR)/$(APP_NAME).o $(OBJDIR)/gpio_sysfs.o $(OBJDIR)/spi_linux.o $(OBJDIR)/aes.o $(OBJDIR)/hal.o $(OBJDIR)/lmic.o $(OBJDIR)/oslmic.o $(OBJDIR)/radio.o
 	$(CC) $< $(OBJDIR)/gpio_sysfs.o $(OBJDIR)/spi_linux.o $(OBJDIR)/aes.o $(OBJDIR)/hal.o $(OBJDIR)/lmic.o $(OBJDIR)/oslmic.o $(OBJDIR)/radio.o -lwiringPi -o $@
 
 ### EOF
