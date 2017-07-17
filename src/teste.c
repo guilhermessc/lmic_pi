@@ -56,8 +56,6 @@ int main (){
 	LMIC.noCRC	= 1;
 
 	hal_init();
-printf("*********** hal_init done! ***********\n");
-
 	radio_init();
 	printf("Iniciado\n");
 

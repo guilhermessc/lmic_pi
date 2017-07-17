@@ -27,8 +27,6 @@
 
 #define _POSIX_C_SOURCE 199309L
 
-#include <wiringPi.h>
-#include <wiringPiSPI.h>
 #include <stdio.h>
 #include <stdbool.h>
 #include <time.h>
@@ -37,6 +35,7 @@
 
 #include "sx127x_hal.h"
 #include "sx127x.h"
+#include "gpio_sysfs.h"
 
 // Using BCM_GPIO
 const struct lmic_pinmap pins = {
@@ -52,7 +51,6 @@ int fd;
 // I/O
 
 void hal_io_init (void) {
-	wiringPiSetup();
 	knot_hal_gpio_setup();
 	knot_hal_gpio_pin_mode(pins.nss, OUTPUT);
 	knot_hal_gpio_pin_mode(pins.rxtx, OUTPUT);
@@ -64,14 +62,11 @@ void hal_io_init (void) {
 
 // val == 1  => tx 1
 void hal_pin_rxtx (uint8_t val) {
-	printf("*** debbug hal_pin_rxtx\n");
 	knot_hal_gpio_digital_write(pins.rxtx, val);
-	printf("*** debbug hal_pin_rxtx DONE!\n");
 }
 
 // set radio RST pin to given value (or keep floating!)
 void hal_pin_rst (uint8_t val) {
-	printf("*** debbug hal_pin_rst\n");
 	if(val == 0 || val == 1) { // drive pin
 		knot_hal_gpio_pin_mode(pins.rst, OUTPUT);
 		knot_hal_gpio_digital_write(pins.rst, val);
@@ -79,7 +74,6 @@ void hal_pin_rst (uint8_t val) {
 	} else { // keep pin floating
 		knot_hal_gpio_pin_mode(pins.rst, INPUT);
 	}
-	printf("*** debbug hal_pin_rst DONE!\n");
 }
 
 static bool dio_states[3] = {0};
@@ -103,7 +97,6 @@ void hal_io_check(void) {
 static int spifd;
 
 static void hal_spi_init (void) {
-	// spifd = wiringPiSPISetup(0, 10000000);
 	spifd = spi_init("/dev/spidev0.0");
 }
 
@@ -113,7 +106,6 @@ void hal_pin_nss (uint8_t val) {
 
 // perform SPI transaction with radio
 uint8_t hal_spi (uint8_t out) {
-	// uint8_t res = wiringPiSPIDataRW(0, &out, 1);
 	int res = spi_transfer(spifd, NULL, 0, &out, 1);
 	return out;
 }
@@ -233,7 +225,7 @@ void hal_failed (void) {
 }
 
 void hal_init(void) {
-	fd=wiringPiSetup();
+	// fd=wiringPiSetup();
 	hal_io_init();
 	// configure radio SPI
 	hal_spi_init();

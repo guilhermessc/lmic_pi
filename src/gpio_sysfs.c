@@ -133,7 +133,6 @@ int knot_hal_gpio_setup(void)
 	 * It's wrong to call the set up multiple times this static varaible
 	 * avoids unexpected behaviour caused by such mistakes
 	 */
-printf("go go go\n");
 	static int c = 0;
 	for (; c<HIGHEST_GPIO; ++c)
 		initialized_gpio[c] = NOT_INITIALIZED;
@@ -153,43 +152,25 @@ void knot_hal_gpio_unmap(void)
 
 int knot_hal_gpio_pin_mode(uint8_t gpio, uint8_t mode)
 {
-	printf("-> knot_hal_gpio_pin_mode         %d\t\t%d\n", gpio, mode);
 	if (gpio > HIGHEST_GPIO) {
 		fprintf(stderr, "Cannot initialize gpio: maximum number exceeded\n");
 		return -1;
 	}
 
-	// if(initialized_gpio[gpio-1] != NOT_INITIALIZED){
-	// 	printf("reseting gpio %d\n", gpio);
-	// 	if (GPIOUnexport(gpio) == 0)
-	// 		initialized_gpio[gpio-1] = NOT_INITIALIZED;
-	// }
-
-	// if (GPIOExport((int) gpio)==0 && GPIODirection((int) gpio, (int) mode)==0){
-	// 	if (mode == INPUT){
-	// 		initialized_gpio[gpio-1] = INITIALIZED_INPUT;
-	// 	} else
-	// 		initialized_gpio[gpio-1] = INITIALIZED_OUTPUT;
-	// } else {
-	// 	fprintf(stderr, "Cannot initialize gpio: GPIOExport failed\n");
-	// 	return knot_hal_gpio_pin_mode(gpio, mode);
-	// 	// return -1;
-	// }
-
 	if(initialized_gpio[gpio-1] == NOT_INITIALIZED){
-		GPIOExport((int) gpio);
+		if (GPIOExport((int) gpio) != 0)
+			return -1;
 		initialized_gpio[gpio-1] = INITIALIZED;
 	}
 
-	if (GPIODirection((int) gpio, (int) mode)==0) {
-		if (mode == INPUT){
-			initialized_gpio[gpio-1] = INITIALIZED_INPUT;
-		} else
-			initialized_gpio[gpio-1] = INITIALIZED_OUTPUT;
-	} else {
-		printf("falha 2\n");
+	if (GPIODirection((int) gpio, (int) mode) != 0)
 		return -1;
-	}
+
+	if (mode == INPUT)
+		initialized_gpio[gpio-1] = INITIALIZED_INPUT;
+	else
+		initialized_gpio[gpio-1] = INITIALIZED_OUTPUT;
+
 
 	return 0;
 }

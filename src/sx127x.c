@@ -447,19 +447,12 @@ void radio_init () {
 
 	// some sanity checks, e.g., read version number
 	uint8_t v = readReg(RegVersion);
-printf("------ %d\n", v);
 
 	// seed 15-byte randomness via noise rssi
 	rxlora(RXMODE_RSSI);
-printf("AQUI 1\n");
 	// while( (readReg(RegOpMode) & OPMODE_MASK) != OPMODE_RX );
-	int reg_debbug;
-	do{
-		reg_debbug = readReg(RegOpMode);
-		// printf("%d       %d        %d     %d\n", reg_debbug, OPMODE_MASK, (reg_debbug & OPMODE_MASK), OPMODE_RX);
-	}while( (reg_debbug & OPMODE_MASK) != OPMODE_RX );
+	while( (readReg(RegOpMode) & OPMODE_MASK) != OPMODE_RX );
 
-printf("AQUI 2\n");
 	for(int i=1; i<16; i++) {
 		for(int j=0; j<8; j++) {
 		// wait for two non-identical subsequent least-significant bits
