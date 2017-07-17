@@ -32,7 +32,7 @@ $(OBJDIR)/%.o: src/%.c $(INCLUDES) | $(OBJDIR)
 
 ### Main program assembly
 
-$(APP_NAME): $(OBJDIR)/$(APP_NAME).o $(OBJDIR)/gpio_sysfs.o $(OBJDIR)/sx127x_hal_linux.o $(OBJDIR)/sx127x.o
-	$(CC) $< $ $(OBJDIR)/gpio_sysfs.o $(OBJDIR)/sx127x_hal_linux.o $(OBJDIR)/sx127x.o -lwiringPi -o $@
+$(APP_NAME): $(OBJDIR)/$(APP_NAME).o $(OBJDIR)/spi_linux.o $(OBJDIR)/gpio_sysfs.o $(OBJDIR)/sx127x_hal_linux.o $(OBJDIR)/sx127x.o
+	$(CC) $< $(OBJDIR)/spi_linux.o $(OBJDIR)/gpio_sysfs.o $(OBJDIR)/sx127x_hal_linux.o $(OBJDIR)/sx127x.o -lwiringPi -o $@
 
 ### EOF

@@ -103,7 +103,8 @@ void hal_io_check(void) {
 static int spifd;
 
 static void hal_spi_init (void) {
-	spifd = wiringPiSPISetup(0, 10000000);
+	// spifd = wiringPiSPISetup(0, 10000000);
+	spifd = spi_init("/dev/spidev0.0");
 }
 
 void hal_pin_nss (uint8_t val) {
@@ -112,8 +113,8 @@ void hal_pin_nss (uint8_t val) {
 
 // perform SPI transaction with radio
 uint8_t hal_spi (uint8_t out) {
-	uint8_t res = wiringPiSPIDataRW(0, &out, 1);
-printf("+++++++++++++++++ %d\n", out);
+	// uint8_t res = wiringPiSPIDataRW(0, &out, 1);
+	int res = spi_transfer(spifd, NULL, 0, &out, 1);
 	return out;
 }
 
